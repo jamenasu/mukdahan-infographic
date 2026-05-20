@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infographic – ส่งมอบคอมพิวเตอร์ระบบเช่า โรงพยาบาลมุกดาหาร 2569</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal:   #0D7A6B;
+    --teal2:  #1AAF98;
+    --teal3:  #C6F0EB;
+    --navy:   #0B2545;
+    --navy2:  #163566;
+    --amber:  #F5A623;
+    --coral:  #E05A3A;
+    --slate:  #5A6A7A;
+    --light:  #F0F6F8;
+    --white:  #FFFFFF;
+    --ink:    #0B1F2E;
+  }
+
+  body {
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ============ LAYOUT ============ */
+  .page {
+    width: 900px;
+    margin: 0 auto;
+    background: var(--navy);
+    padding: 48px 40px 56px;
+  }
+
+  /* ============ HEADER ============ */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    position: relative;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0;
+    width: 120px; height: 3px;
+    background: var(--teal2);
+    border-radius: 99px;
+  }
+  .header-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal2);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .header-title {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--white);
+    max-width: 440px;
+  }
+  .header-title em { font-style: normal; color: var(--teal2); }
+  .header-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 8px;
+  }
+  .header-big {
+    text-align: right;
+  }
+  .header-big .num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 72px;
+    font-weight: 600;
+    color: var(--teal2);
+    line-height: 1;
+  }
+  .header-big .unit {
+    font-size: 16px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 4px;
+  }
+  .header-big .label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+  }
+
+  /* ============ KPI STRIP ============ */
+  .kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .kpi-card {
+    background: var(--navy2);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 18px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .kpi-card.c-teal::before { background: var(--teal2); }
+  .kpi-card.c-amber::before { background: var(--amber); }
+  .kpi-card.c-coral::before { background: var(--coral); }
+  .kpi-card.c-slate::before { background: #8899AA; }
+  .kpi-icon {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  .kpi-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--white);
+  }
+  .kpi-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  /* ============ PERIOD BAR ============ */
+  .period-band {
+    background: rgba(26,175,152,0.12);
+    border: 1px solid rgba(26,175,152,0.3);
+    border-radius: 10px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin-bottom: 32px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+  }
+  .period-band strong { color: var(--teal2); font-weight: 600; }
+  .period-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.2); flex-shrink: 0; }
+
+  /* ============ BODY 2-COL ============ */
+  .body-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 24px;
+    margin-bottom: 28px;
+  }
+
+  /* ============ SECTION LABEL ============ */
+  .sec-label {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teal2);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+
+  /* ============ TIMELINE BARS ============ */
+  .timeline { width: 100%; }
+  .timeline-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 7px;
+  }
+  .tl-date {
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: rgba(255,255,255,0.5);
+    width: 80px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+  .tl-bar-track {
+    flex: 1;
+    height: 22px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .tl-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    font-size: 10px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+  }
+  .tl-bar-fill.done   { background: rgba(90,106,122,0.6); color: rgba(255,255,255,0.5); }
+  .tl-bar-fill.normal { background: linear-gradient(90deg, #0D7A6B, #1AAF98); color: #C6F0EB; }
+  .tl-bar-fill.wknd   { background: linear-gradient(90deg, #1A3A7A, #2A5EC4); color: #A8C4F8; }
+  .tl-bar-fill.peak   { background: linear-gradient(90deg, #C44A20, #F07A50); color: #FFD4C6; }
+  .tl-count {
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: rgba(255,255,255,0.6);
+    width: 44px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+  .tl-count strong { color: var(--white); font-size: 12px; }
+
+  /* ============ DOUGHNUT + LEGEND ============ */
+  .right-col {}
+  .donut-wrap {
+    background: var(--navy2);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 20px 18px;
+    margin-bottom: 16px;
+  }
+  .donut-svg-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 12px 0;
+    position: relative;
+  }
+  .donut-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  .donut-center .dc-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1;
+  }
+  .donut-center .dc-lbl {
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    margin-top: 3px;
+  }
+  .donut-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .dl-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+  }
+  .dl-left { display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.7); }
+  .dl-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+  .dl-val { font-family: 'IBM Plex Mono', monospace; font-weight: 600; color: var(--white); font-size: 13px; }
+
+  /* ============ TOP DEPT ============ */
+  .top-depts {
+    background: var(--navy2);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 18px 18px;
+  }
+  .dept-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 9px;
+  }
+  .dept-rank {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    width: 16px;
+    flex-shrink: 0;
+  }
+  .dept-bar-wrap { flex: 1; }
+  .dept-name {
+    font-size: 11px;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 3px;
+    line-height: 1.2;
+  }
+  .dept-bar-bg {
+    height: 6px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .dept-bar-fill { height: 100%; border-radius: 99px; background: var(--teal2); }
+  .dept-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--teal2);
+    width: 28px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* ============ DETAIL GRID ============ */
+  .detail-section { margin-bottom: 28px; }
+  .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+  .dg-card {
+    background: var(--navy2);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 10px 10px 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .dg-card.wknd { border-color: rgba(42,94,196,0.4); }
+  .dg-card.peak { border-color: rgba(240,122,80,0.5); }
+  .dg-date {
+    font-size: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 4px;
+  }
+  .dg-count {
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .dg-card.wknd .dg-count { color: #7EAAFF; }
+  .dg-card.peak .dg-count { color: #F07A50; }
+  .dg-locs {
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.42);
+    line-height: 1.45;
+  }
+  .wknd-tag {
+    position: absolute;
+    top: 6px; right: 6px;
+    font-size: 8px;
+    background: rgba(42,94,196,0.3);
+    color: #A8C4F8;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .peak-tag {
+    position: absolute;
+    top: 6px; right: 6px;
+    font-size: 8px;
+    background: rgba(240,122,80,0.25);
+    color: #F07A50;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  /* ============ FOOTER ============ */
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .footer-left { font-size: 11px; color: rgba(255,255,255,0.3); line-height: 1.6; }
+  .legend-row { display: flex; gap: 16px; font-size: 11px; color: rgba(255,255,255,0.5); }
+  .leg { display: flex; align-items: center; gap: 5px; }
+  .leg-dot { width: 8px; height: 8px; border-radius: 2px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ===== HEADER ===== -->
+  <div class="header">
+    <div>
+      <div class="header-eyebrow">โรงพยาบาลมุกดาหาร · ปีงบประมาณ 2569</div>
+      <div class="header-title">กำหนดการส่งมอบ<br><em>คอมพิวเตอร์ระบบเช่า</em><br>Paperless</div>
+      <div class="header-sub">18 พฤษภาคม – 3 มิถุนายน 2569 · ระยะเวลา 17 วัน</div>
+    </div>
+    <div class="header-big">
+      <div class="num">299</div>
+      <div class="unit">เครื่อง</div>
+      <div class="label">รวมทั้งสิ้น</div>
+    </div>
+  </div>
+
+  <!-- ===== KPI STRIP ===== -->
+  <div class="kpi-strip">
+    <div class="kpi-card c-slate">
+      <div class="kpi-icon">✅</div>
+      <div class="kpi-val">44</div>
+      <div class="kpi-label">ส่งมอบแล้ว<br>(18–20 พ.ค.)</div>
+    </div>
+    <div class="kpi-card c-teal">
+      <div class="kpi-icon">🖥</div>
+      <div class="kpi-val">255</div>
+      <div class="kpi-label">คงเหลือตามแผน<br>(21 พ.ค.–3 มิ.ย.)</div>
+    </div>
+    <div class="kpi-card c-coral">
+      <div class="kpi-icon">🔝</div>
+      <div class="kpi-val">30</div>
+      <div class="kpi-label">สูงสุด/วัน<br>(30 พ.ค.)</div>
+    </div>
+    <div class="kpi-card c-amber">
+      <div class="kpi-icon">📅</div>
+      <div class="kpi-val">~18</div>
+      <div class="kpi-label">เฉลี่ย/วัน<br>(เครื่อง)</div>
+    </div>
+  </div>
+
+  <!-- ===== PERIOD BAND ===== -->
+  <div class="period-band">
+    <span>🗓 ช่วงส่งมอบ: <strong>18 พฤษภาคม – 3 มิถุนายน 2569</strong></span>
+    <div class="period-dot"></div>
+    <span>⏱ ระยะเวลา: <strong>17 วัน</strong></span>
+    <div class="period-dot"></div>
+    <span>🏥 แผนกที่รับเครื่อง: <strong>30+ แผนก</strong></span>
+    <div class="period-dot"></div>
+    <span>🏖 รวมวันหยุด: <strong>5 วัน</strong></span>
+  </div>
+
+  <!-- ===== BODY 2-COL ===== -->
+  <div class="body-grid">
+    <!-- Left: Timeline bars -->
+    <div>
+      <div class="sec-label">ปริมาณการส่งมอบรายวัน</div>
+      <div class="timeline" id="timeline"></div>
+    </div>
+
+    <!-- Right: Donut + Top depts -->
+    <div class="right-col">
+      <div class="donut-wrap">
+        <div class="sec-label">สัดส่วนการส่งมอบ</div>
+        <div class="donut-svg-wrap">
+          <svg width="160" height="160" viewBox="0 0 160 160">
+            <!-- done: 44/299 = 14.7% -->
+            <!-- remaining: 255/299 = 85.3% -->
+            <!-- weekday: ~200, weekend: ~55 -->
+            <circle cx="80" cy="80" r="60" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="22"/>
+            <!-- done -->
+            <circle cx="80" cy="80" r="60" fill="none" stroke="#5A6A7A" stroke-width="22"
+              stroke-dasharray="55.4 322.1" stroke-dashoffset="90" stroke-linecap="butt"/>
+            <!-- weekends -->
+            <circle cx="80" cy="80" r="60" fill="none" stroke="#2A5EC4" stroke-width="22"
+              stroke-dasharray="65 322.1" stroke-dashoffset="35.4" stroke-linecap="butt"/>
+            <!-- weekday normal -->
+            <circle cx="80" cy="80" r="60" fill="none" stroke="#1AAF98" stroke-width="22"
+              stroke-dasharray="201.7 322.1" stroke-dashoffset="-29.6" stroke-linecap="butt"/>
+          </svg>
+          <div class="donut-center">
+            <div class="dc-val">299</div>
+            <div class="dc-lbl">เครื่อง</div>
+          </div>
+        </div>
+        <div class="donut-legend">
+          <div class="dl-row">
+            <div class="dl-left"><div class="dl-dot" style="background:#1AAF98"></div>วันธรรมดา</div>
+            <div class="dl-val">200</div>
+          </div>
+          <div class="dl-row">
+            <div class="dl-left"><div class="dl-dot" style="background:#2A5EC4"></div>วันเสาร์-อาทิตย์</div>
+            <div class="dl-val">55</div>
+          </div>
+          <div class="dl-row">
+            <div class="dl-left"><div class="dl-dot" style="background:#5A6A7A"></div>ส่งมอบแล้ว</div>
+            <div class="dl-val">44</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="top-depts">
+        <div class="sec-label">แผนกหลัก (จำนวนเครื่อง)</div>
+        <div id="depts"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== DETAIL CARDS ===== -->
+  <div class="detail-section">
+    <div class="sec-label">รายละเอียดแต่ละวัน (21 พ.ค. – 3 มิ.ย.)</div>
+    <div class="detail-grid" id="cards"></div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <div class="footer">
+    <div class="footer-left">
+      * Standby รับงาน = ทีมเตรียมพร้อมตั้งแต่ 08:00 น.<br>
+      * +PPL = ติดตั้งพร้อมกับเครื่องสำรอง
+    </div>
+    <div class="legend-row">
+      <div class="leg"><div class="leg-dot" style="background:#1AAF98"></div>วันธรรมดา</div>
+      <div class="leg"><div class="leg-dot" style="background:#2A5EC4"></div>เสาร์-อาทิตย์</div>
+      <div class="leg"><div class="leg-dot" style="background:#F07A50"></div>วันยอดสูงสุด</div>
+      <div class="leg"><div class="leg-dot" style="background:#5A6A7A"></div>ส่งมอบแล้ว</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const timelineData = [
+  { date: '18–20 พ.ค.', count: 44, type: 'done', locs: 'ส่งมอบแล้วทั้งหมด' },
+  { date: '21 พ.ค.', count: 17, type: 'normal', locs: 'หอพิเศษ 2,3,4 · จ่ายยา ชั้น 1' },
+  { date: '22 พ.ค.', count: 19, type: 'normal', locs: 'หอพิเศษ 9 · หลังคลอด · ทันตกรรม' },
+  { date: '23 พ.ค. (เสาร์)', count: 23, type: 'wknd', locs: 'จักษุ · หู คอ จมูก · กุมารฯ · สูติฯ' },
+  { date: '24 พ.ค. (อาทิตย์)', count: 16, type: 'wknd', locs: 'ฝากครรภ์ · จ่ายยา ชั้น 2' },
+  { date: '25 พ.ค.', count: 20, type: 'normal', locs: 'หอพิเศษ 14 · ICU กุมารฯ · กุมารฯ' },
+  { date: '26 พ.ค.', count: 18, type: 'normal', locs: 'หอพิเศษ 13 · มะเร็งฯ · ศัลยกรรมทั่วไป' },
+  { date: '27 พ.ค.', count: 16, type: 'normal', locs: 'หอพิเศษ 12 · ห้องคลอด · อายุรกรรมหญิง' },
+  { date: '28 พ.ค.', count: 18, type: 'normal', locs: 'ศัลยกรรมกระดูก · ICU อายุรกรรม · อายุรกรรมชาย' },
+  { date: '29 พ.ค.', count: 17, type: 'normal', locs: 'ตา หู คอ จมูก · อุบัติเหตุฉุกเฉิน' },
+  { date: '30 พ.ค. (เสาร์)', count: 30, type: 'peak', locs: 'PCU · จ่ายยา PCC · ศัลยกรรมหนัก' },
+  { date: '31 พ.ค. (อาทิตย์)', count: 21, type: 'wknd', locs: 'วิสัญญี · ห้องผ่าตัด · CCU · จ่ายยา' },
+  { date: '1 มิ.ย.', count: 11, type: 'normal', locs: 'รังสีวิทยา · ศัลยกรรมหญิง · Cathlab' },
+  { date: '2 มิ.ย.', count: 14, type: 'normal', locs: 'จิตเวช · ศูนย์โรคหัวใจ · โภชนาการ' },
+  { date: '3 มิ.ย.', count: 15, type: 'normal', locs: 'ห้องตรวจจิตเวช · ไตเทียม' },
+];
+
+const MAX_COUNT = 44;
+const tl = document.getElementById('timeline');
+timelineData.forEach(d => {
+  const pct = Math.round((d.count / MAX_COUNT) * 100);
+  const locs = d.locs.length > 36 ? d.locs.substring(0,36) + '…' : d.locs;
+  tl.innerHTML += `
+    <div class="timeline-row">
+      <div class="tl-date">${d.date.replace(' (เสาร์)','★').replace(' (อาทิตย์)','★')}</div>
+      <div class="tl-bar-track">
+        <div class="tl-bar-fill ${d.type}" style="width:${pct}%">${locs}</div>
+      </div>
+      <div class="tl-count"><strong>${d.count}</strong></div>
+    </div>`;
+});
+
+// Top depts
+const depts = [
+  { name: 'ทันตกรรม', count: 13 },
+  { name: 'หอผู้ป่วยกุมารเวชกรรม', count: 12 },
+  { name: 'PCU (จุดซักประวัติ+ห้องตรวจ)', count: 18 },
+  { name: 'อุบัติเหตุและฉุกเฉิน', count: 11 },
+  { name: 'อายุรกรรมหญิง 1+2', count: 10 },
+  { name: 'ห้องจ่ายยา ชั้น 1', count: 11 },
+  { name: 'ห้องผ่าตัด ชั้น 3,4', count: 8 },
+  { name: 'ศูนย์โรคหัวใจ', count: 7 },
+];
+const maxDept = Math.max(...depts.map(d => d.count));
+const dEl = document.getElementById('depts');
+depts.forEach((d, i) => {
+  const pct = Math.round((d.count / maxDept) * 100);
+  dEl.innerHTML += `
+    <div class="dept-row">
+      <div class="dept-rank">${i+1}</div>
+      <div class="dept-bar-wrap">
+        <div class="dept-name">${d.name}</div>
+        <div class="dept-bar-bg"><div class="dept-bar-fill" style="width:${pct}%;opacity:${0.5 + pct/200}"></div></div>
+      </div>
+      <div class="dept-num">${d.count}</div>
+    </div>`;
+});
+
+// Detail cards (21 พ.ค. onwards only)
+const cards = timelineData.slice(1);
+const cEl = document.getElementById('cards');
+cards.forEach(d => {
+  const cls = d.type === 'wknd' ? 'dg-card wknd' : d.type === 'peak' ? 'dg-card peak' : 'dg-card';
+  const tag = d.type === 'wknd' ? '<div class="wknd-tag">หยุด</div>' :
+              d.type === 'peak' ? '<div class="peak-tag">สูงสุด</div>' : '';
+  const shortDate = d.date.replace(' (เสาร์)','').replace(' (อาทิตย์)','');
+  const locs = d.locs.split(' · ').join('<br>');
+  cEl.innerHTML += `
+    <div class="${cls}">
+      ${tag}
+      <div class="dg-date">${shortDate}</div>
+      <div class="dg-count">${d.count}</div>
+      <div class="dg-locs">${locs}</div>
+    </div>`;
+});
+</script>
+</body>
+</html>
