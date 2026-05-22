@@ -32,10 +32,17 @@
 
   /* ============ LAYOUT ============ */
   .page {
-    width: 900px;
+    width: 100%;
     margin: 0 auto;
     background: var(--navy);
-    padding: 48px 40px 56px;
+    padding: 48px clamp(24px, 4vw, 64px) 56px;
+  }
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    align-items: stretch;
+    margin-bottom: 30px;
   }
 
   /* ============ HEADER ============ */
@@ -48,13 +55,44 @@
     border-bottom: 1px solid rgba(255,255,255,0.12);
     position: relative;
   }
-  .header::after {
-    content: '';
+  .header-progress {
     position: absolute;
-    bottom: -1px; left: 0;
-    width: 120px; height: 3px;
-    background: var(--teal2);
+    bottom: -9px; left: 0;
+    width: 100%;
+    height: 18px;
+    background: rgba(255,255,255,0.08);
     border-radius: 99px;
+    overflow: visible;
+  }
+  .header-progress-bar {
+    position: relative;
+    width: 28.43%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal2), #58D7C8);
+    border-radius: inherit;
+    min-width: 68px;
+    box-shadow: 0 0 18px rgba(26,175,152,0.28);
+  }
+  .header-progress-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .header-progress-flag {
+    position: absolute;
+    top: 50%;
+    right: -1px;
+    transform: translate(50%, -58%);
+    font-size: 18px;
+    line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.28));
   }
   .header-eyebrow {
     font-size: 11px;
@@ -82,10 +120,19 @@
   }
   .header-big .num {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 72px;
+    font-size: 58px;
     font-weight: 600;
     color: var(--teal2);
     line-height: 1;
+    white-space: nowrap;
+  }
+  .header-big .num .slash {
+    color: rgba(255,255,255,0.28);
+    font-size: 0.72em;
+    margin: 0 2px;
+  }
+  .header-big .num .total {
+    color: rgba(255,255,255,0.84);
   }
   .header-big .unit {
     font-size: 16px;
@@ -102,17 +149,19 @@
   /* ============ KPI STRIP ============ */
   .kpi-strip {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
-    margin-bottom: 32px;
+    margin-bottom: 0;
+    height: 100%;
   }
   .kpi-card {
     background: var(--navy2);
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 14px;
-    padding: 18px 16px;
+    padding: 20px 18px;
     position: relative;
     overflow: hidden;
+    min-height: 142px;
   }
   .kpi-card::before {
     content: '';
@@ -142,30 +191,6 @@
     line-height: 1.4;
   }
 
-  /* ============ PERIOD BAR ============ */
-  .period-band {
-    background: rgba(26,175,152,0.12);
-    border: 1px solid rgba(26,175,152,0.3);
-    border-radius: 10px;
-    padding: 12px 20px;
-    display: flex;
-    align-items: center;
-    gap: 32px;
-    margin-bottom: 32px;
-    font-size: 13px;
-    color: rgba(255,255,255,0.75);
-  }
-  .period-band strong { color: var(--teal2); font-weight: 600; }
-  .period-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.2); flex-shrink: 0; }
-
-  /* ============ BODY 2-COL ============ */
-  .body-grid {
-    display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: 24px;
-    margin-bottom: 28px;
-  }
-
   /* ============ SECTION LABEL ============ */
   .sec-label {
     font-size: 10px;
@@ -174,149 +199,6 @@
     color: var(--teal2);
     font-weight: 600;
     margin-bottom: 14px;
-  }
-
-  /* ============ TIMELINE BARS ============ */
-  .timeline { width: 100%; }
-  .timeline-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 7px;
-  }
-  .tl-date {
-    font-size: 11px;
-    font-family: 'IBM Plex Mono', monospace;
-    color: rgba(255,255,255,0.5);
-    width: 80px;
-    flex-shrink: 0;
-    text-align: right;
-  }
-  .tl-bar-track {
-    flex: 1;
-    height: 22px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 4px;
-    overflow: hidden;
-    position: relative;
-  }
-  .tl-bar-fill {
-    height: 100%;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    padding-left: 8px;
-    font-size: 10px;
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    position: relative;
-  }
-  .tl-bar-fill.done   { background: rgba(90,106,122,0.6); color: rgba(255,255,255,0.5); }
-  .tl-bar-fill.normal { background: linear-gradient(90deg, #0D7A6B, #1AAF98); color: #C6F0EB; }
-  .tl-bar-fill.wknd   { background: linear-gradient(90deg, #1A3A7A, #2A5EC4); color: #A8C4F8; }
-  .tl-bar-fill.peak   { background: linear-gradient(90deg, #C44A20, #F07A50); color: #FFD4C6; }
-  .tl-count {
-    font-size: 11px;
-    font-family: 'IBM Plex Mono', monospace;
-    color: rgba(255,255,255,0.6);
-    width: 44px;
-    flex-shrink: 0;
-    text-align: right;
-  }
-  .tl-count strong { color: var(--white); font-size: 12px; }
-
-  /* ============ DOUGHNUT + LEGEND ============ */
-  .right-col {}
-  .donut-wrap {
-    background: var(--navy2);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 14px;
-    padding: 20px 18px;
-    margin-bottom: 16px;
-  }
-  .donut-svg-wrap {
-    display: flex;
-    justify-content: center;
-    margin: 12px 0;
-    position: relative;
-  }
-  .donut-center {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-  }
-  .donut-center .dc-val {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 26px;
-    font-weight: 600;
-    color: var(--white);
-    line-height: 1;
-  }
-  .donut-center .dc-lbl {
-    font-size: 10px;
-    color: rgba(255,255,255,0.45);
-    margin-top: 3px;
-  }
-  .donut-legend {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 14px;
-  }
-  .dl-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 12px;
-  }
-  .dl-left { display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.7); }
-  .dl-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
-  .dl-val { font-family: 'IBM Plex Mono', monospace; font-weight: 600; color: var(--white); font-size: 13px; }
-
-  /* ============ TOP DEPT ============ */
-  .top-depts {
-    background: var(--navy2);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 14px;
-    padding: 18px 18px;
-  }
-  .dept-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 9px;
-  }
-  .dept-rank {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: rgba(255,255,255,0.3);
-    width: 16px;
-    flex-shrink: 0;
-  }
-  .dept-bar-wrap { flex: 1; }
-  .dept-name {
-    font-size: 11px;
-    color: rgba(255,255,255,0.65);
-    margin-bottom: 3px;
-    line-height: 1.2;
-  }
-  .dept-bar-bg {
-    height: 6px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 99px;
-    overflow: hidden;
-  }
-  .dept-bar-fill { height: 100%; border-radius: 99px; background: var(--teal2); }
-  .dept-num {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--teal2);
-    width: 28px;
-    text-align: right;
-    flex-shrink: 0;
   }
 
   /* ============ DETAIL GRID ============ */
@@ -357,6 +239,18 @@
     color: rgba(255,255,255,0.42);
     line-height: 1.45;
   }
+  .dg-card.done { border-color: rgba(136,153,170,0.45); }
+  .dg-card.done .dg-count { color: #AAB6C2; }
+  .done-tag {
+    position: absolute;
+    top: 6px; right: 6px;
+    font-size: 8px;
+    background: rgba(136,153,170,0.22);
+    color: #C8D2DC;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
   .wknd-tag {
     position: absolute;
     top: 6px; right: 6px;
@@ -379,6 +273,158 @@
     font-weight: 600;
   }
 
+  /* ============ DAILY TABS ============ */
+  .daily-section {
+    margin-bottom: 0;
+    background: linear-gradient(135deg, rgba(22,53,102,0.92), rgba(11,37,69,0.86));
+    border: 1px solid rgba(26,175,152,0.22);
+    border-radius: 14px;
+    padding: 20px 20px 20px 24px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    position: relative;
+  }
+  .daily-section::before {
+    content: '';
+    position: absolute;
+    top: 18px;
+    bottom: 18px;
+    left: 0;
+    width: 4px;
+    border-radius: 0 99px 99px 0;
+    background: linear-gradient(180deg, var(--teal2), var(--amber));
+  }
+  .daily-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 14px;
+  }
+  .daily-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.25;
+    max-width: 620px;
+  }
+  .daily-meta {
+    font-size: 11px;
+    color: rgba(255,255,255,0.46);
+    margin-top: 5px;
+  }
+  .daily-badge {
+    flex: 0 0 auto;
+    align-self: flex-start;
+    border: 1px solid rgba(245,166,35,0.32);
+    border-radius: 8px;
+    padding: 7px 10px;
+    color: #FFD58A;
+    background: rgba(245,166,35,0.08);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .tab-list {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .tab-btn {
+    appearance: none;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(11,37,69,0.72);
+    color: rgba(255,255,255,0.7);
+    border-radius: 8px;
+    min-width: 0;
+    padding: 8px 9px 9px;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+    transition: border-color .18s ease, background .18s ease, color .18s ease;
+  }
+  .tab-btn:hover,
+  .tab-btn:focus-visible {
+    border-color: rgba(26,175,152,0.55);
+    outline: none;
+  }
+  .tab-btn.active {
+    background: var(--teal2);
+    color: var(--navy);
+    border-color: var(--teal2);
+  }
+  .tab-btn.done { border-color: rgba(136,153,170,0.36); }
+  .tab-btn.wknd { border-color: rgba(42,94,196,0.45); }
+  .tab-btn.peak { border-color: rgba(240,122,80,0.55); }
+  .tab-date {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .tab-count {
+    display: block;
+    font-size: 10px;
+    margin-top: 5px;
+    opacity: 0.78;
+  }
+  .daily-panel {
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    gap: 16px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 16px;
+  }
+  .day-stat {
+    background: rgba(11,37,69,0.76);
+    border-radius: 12px;
+    padding: 16px;
+    min-height: 140px;
+  }
+  .day-stat .num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 44px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--teal2);
+  }
+  .day-stat .label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 7px;
+  }
+  .day-stat .status {
+    display: inline-flex;
+    margin-top: 16px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.68);
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .day-detail {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .day-item {
+    background: rgba(11,37,69,0.46);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 11px 12px;
+    color: rgba(255,255,255,0.72);
+    font-size: 12px;
+    line-height: 1.48;
+  }
+  .day-item strong {
+    color: var(--white);
+    font-weight: 600;
+  }
+
   /* ============ FOOTER ============ */
   .footer {
     display: flex;
@@ -391,6 +437,45 @@
   .legend-row { display: flex; gap: 16px; font-size: 11px; color: rgba(255,255,255,0.5); }
   .leg { display: flex; align-items: center; gap: 5px; }
   .leg-dot { width: 8px; height: 8px; border-radius: 2px; }
+
+  @media (max-width: 1180px) {
+    .overview-grid {
+      grid-template-columns: 1fr;
+    }
+    .kpi-strip {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 760px) {
+    .page {
+      padding: 32px 18px 40px;
+    }
+    .header,
+    .footer {
+      flex-direction: column;
+      gap: 22px;
+    }
+    .header-big {
+      text-align: left;
+    }
+    .header-title {
+      max-width: none;
+    }
+    .kpi-strip,
+    .detail-grid,
+    .tab-list,
+    .daily-panel,
+    .day-detail {
+      grid-template-columns: 1fr;
+    }
+    .footer {
+      align-items: flex-start;
+    }
+    .legend-row {
+      flex-wrap: wrap;
+    }
+  }
 </style>
 </head>
 <body>
@@ -401,109 +486,64 @@
     <div>
       <div class="header-eyebrow">โรงพยาบาลมุกดาหาร · ปีงบประมาณ 2569</div>
       <div class="header-title">กำหนดการส่งมอบ<br><em>คอมพิวเตอร์ระบบเช่า</em><br>Paperless</div>
-      <div class="header-sub">18 พฤษภาคม – 3 มิถุนายน 2569 · ระยะเวลา 17 วัน</div>
+      <div class="header-sub">18 พฤษภาคม – 3 มิถุนายน 2569 · อัปเดตสะสมถึง 22 พฤษภาคม 2569</div>
     </div>
     <div class="header-big">
-      <div class="num">299</div>
+      <div class="num"><span class="done">85</span><span class="slash">/</span><span class="total">299</span></div>
       <div class="unit">เครื่อง</div>
-      <div class="label">รวมทั้งสิ้น</div>
+      <div class="label">ส่งมอบแล้ว / รวมทั้งสิ้น</div>
     </div>
-  </div>
-
-  <!-- ===== KPI STRIP ===== -->
-  <div class="kpi-strip">
-    <div class="kpi-card c-slate">
-      <div class="kpi-icon">✅</div>
-      <div class="kpi-val">44</div>
-      <div class="kpi-label">ส่งมอบแล้ว<br>(18–20 พ.ค.)</div>
-    </div>
-    <div class="kpi-card c-teal">
-      <div class="kpi-icon">🖥</div>
-      <div class="kpi-val">255</div>
-      <div class="kpi-label">คงเหลือตามแผน<br>(21 พ.ค.–3 มิ.ย.)</div>
-    </div>
-    <div class="kpi-card c-coral">
-      <div class="kpi-icon">🔝</div>
-      <div class="kpi-val">30</div>
-      <div class="kpi-label">สูงสุด/วัน<br>(30 พ.ค.)</div>
-    </div>
-    <div class="kpi-card c-amber">
-      <div class="kpi-icon">📅</div>
-      <div class="kpi-val">~18</div>
-      <div class="kpi-label">เฉลี่ย/วัน<br>(เครื่อง)</div>
-    </div>
-  </div>
-
-  <!-- ===== PERIOD BAND ===== -->
-  <div class="period-band">
-    <span>🗓 ช่วงส่งมอบ: <strong>18 พฤษภาคม – 3 มิถุนายน 2569</strong></span>
-    <div class="period-dot"></div>
-    <span>⏱ ระยะเวลา: <strong>17 วัน</strong></span>
-    <div class="period-dot"></div>
-    <span>🏥 แผนกที่รับเครื่อง: <strong>30+ แผนก</strong></span>
-    <div class="period-dot"></div>
-    <span>🏖 รวมวันหยุด: <strong>5 วัน</strong></span>
-  </div>
-
-  <!-- ===== BODY 2-COL ===== -->
-  <div class="body-grid">
-    <!-- Left: Timeline bars -->
-    <div>
-      <div class="sec-label">ปริมาณการส่งมอบรายวัน</div>
-      <div class="timeline" id="timeline"></div>
-    </div>
-
-    <!-- Right: Donut + Top depts -->
-    <div class="right-col">
-      <div class="donut-wrap">
-        <div class="sec-label">สัดส่วนการส่งมอบ</div>
-        <div class="donut-svg-wrap">
-          <svg width="160" height="160" viewBox="0 0 160 160">
-            <!-- done: 44/299 = 14.7% -->
-            <!-- remaining: 255/299 = 85.3% -->
-            <!-- weekday: ~200, weekend: ~55 -->
-            <circle cx="80" cy="80" r="60" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="22"/>
-            <!-- done -->
-            <circle cx="80" cy="80" r="60" fill="none" stroke="#5A6A7A" stroke-width="22"
-              stroke-dasharray="55.4 322.1" stroke-dashoffset="90" stroke-linecap="butt"/>
-            <!-- weekends -->
-            <circle cx="80" cy="80" r="60" fill="none" stroke="#2A5EC4" stroke-width="22"
-              stroke-dasharray="65 322.1" stroke-dashoffset="35.4" stroke-linecap="butt"/>
-            <!-- weekday normal -->
-            <circle cx="80" cy="80" r="60" fill="none" stroke="#1AAF98" stroke-width="22"
-              stroke-dasharray="201.7 322.1" stroke-dashoffset="-29.6" stroke-linecap="butt"/>
-          </svg>
-          <div class="donut-center">
-            <div class="dc-val">299</div>
-            <div class="dc-lbl">เครื่อง</div>
-          </div>
-        </div>
-        <div class="donut-legend">
-          <div class="dl-row">
-            <div class="dl-left"><div class="dl-dot" style="background:#1AAF98"></div>วันธรรมดา</div>
-            <div class="dl-val">200</div>
-          </div>
-          <div class="dl-row">
-            <div class="dl-left"><div class="dl-dot" style="background:#2A5EC4"></div>วันเสาร์-อาทิตย์</div>
-            <div class="dl-val">55</div>
-          </div>
-          <div class="dl-row">
-            <div class="dl-left"><div class="dl-dot" style="background:#5A6A7A"></div>ส่งมอบแล้ว</div>
-            <div class="dl-val">44</div>
-          </div>
-        </div>
+    <div class="header-progress" aria-label="ส่งมอบแล้ว 28.43%">
+      <div class="header-progress-bar">
+        <span class="header-progress-label">28.43%</span>
       </div>
+      <div class="header-progress-flag" aria-hidden="true">🏁</div>
+    </div>
+  </div>
 
-      <div class="top-depts">
-        <div class="sec-label">แผนกหลัก (จำนวนเครื่อง)</div>
-        <div id="depts"></div>
+  <div class="overview-grid">
+    <!-- ===== DAILY TABS ===== -->
+    <div class="daily-section">
+      <div class="daily-head">
+        <div>
+          <div class="sec-label">แท็บรายวัน</div>
+          <div class="daily-title">รายงานการปฏิบัติงานส่งมอบเครื่องรายวัน</div>
+          <div class="daily-meta">อ้างอิงข้อมูลสะสมจาก ppl/22 05 69.html</div>
+        </div>
+        <div class="daily-badge">Daily Ops</div>
+      </div>
+      <div class="tab-list" id="dayTabs" role="tablist" aria-label="ข้อมูลรายวัน"></div>
+      <div class="daily-panel" id="dayPanel"></div>
+    </div>
+
+    <!-- ===== KPI STRIP ===== -->
+    <div class="kpi-strip">
+      <div class="kpi-card c-slate">
+        <div class="kpi-icon">✅</div>
+        <div class="kpi-val">85</div>
+        <div class="kpi-label">ส่งมอบแล้ว<br>(18–22 พ.ค.)</div>
+      </div>
+      <div class="kpi-card c-teal">
+        <div class="kpi-icon">🖥</div>
+        <div class="kpi-val">214</div>
+        <div class="kpi-label">คงเหลือตามแผน<br>(23 พ.ค.–3 มิ.ย.)</div>
+      </div>
+      <div class="kpi-card c-coral">
+        <div class="kpi-icon">🔝</div>
+        <div class="kpi-val">24</div>
+        <div class="kpi-label">สูงสุด/วัน<br>(30 พ.ค.)</div>
+      </div>
+      <div class="kpi-card c-amber">
+        <div class="kpi-icon">📅</div>
+        <div class="kpi-val">~18</div>
+        <div class="kpi-label">เฉลี่ย/วัน<br>(เครื่อง)</div>
       </div>
     </div>
   </div>
 
   <!-- ===== DETAIL CARDS ===== -->
   <div class="detail-section">
-    <div class="sec-label">รายละเอียดแต่ละวัน (21 พ.ค. – 3 มิ.ย.)</div>
+    <div class="sec-label">กำหนดการ (21 พ.ค. – 3 มิ.ย.)</div>
     <div class="detail-grid" id="cards"></div>
   </div>
 
@@ -524,71 +564,205 @@
 
 <script>
 const timelineData = [
-  { date: '18–20 พ.ค.', count: 44, type: 'done', locs: 'ส่งมอบแล้วทั้งหมด' },
-  { date: '21 พ.ค.', count: 17, type: 'normal', locs: 'หอพิเศษ 2,3,4 · จ่ายยา ชั้น 1' },
-  { date: '22 พ.ค.', count: 19, type: 'normal', locs: 'หอพิเศษ 9 · หลังคลอด · ทันตกรรม' },
-  { date: '23 พ.ค. (เสาร์)', count: 23, type: 'wknd', locs: 'จักษุ · หู คอ จมูก · กุมารฯ · สูติฯ' },
-  { date: '24 พ.ค. (อาทิตย์)', count: 16, type: 'wknd', locs: 'ฝากครรภ์ · จ่ายยา ชั้น 2' },
-  { date: '25 พ.ค.', count: 20, type: 'normal', locs: 'หอพิเศษ 14 · ICU กุมารฯ · กุมารฯ' },
-  { date: '26 พ.ค.', count: 18, type: 'normal', locs: 'หอพิเศษ 13 · มะเร็งฯ · ศัลยกรรมทั่วไป' },
-  { date: '27 พ.ค.', count: 16, type: 'normal', locs: 'หอพิเศษ 12 · ห้องคลอด · อายุรกรรมหญิง' },
-  { date: '28 พ.ค.', count: 18, type: 'normal', locs: 'ศัลยกรรมกระดูก · ICU อายุรกรรม · อายุรกรรมชาย' },
-  { date: '29 พ.ค.', count: 17, type: 'normal', locs: 'ตา หู คอ จมูก · อุบัติเหตุฉุกเฉิน' },
-  { date: '30 พ.ค. (เสาร์)', count: 30, type: 'peak', locs: 'PCU · จ่ายยา PCC · ศัลยกรรมหนัก' },
-  { date: '31 พ.ค. (อาทิตย์)', count: 21, type: 'wknd', locs: 'วิสัญญี · ห้องผ่าตัด · CCU · จ่ายยา' },
-  { date: '1 มิ.ย.', count: 11, type: 'normal', locs: 'รังสีวิทยา · ศัลยกรรมหญิง · Cathlab' },
-  { date: '2 มิ.ย.', count: 14, type: 'normal', locs: 'จิตเวช · ศูนย์โรคหัวใจ · โภชนาการ' },
-  { date: '3 มิ.ย.', count: 15, type: 'normal', locs: 'ห้องตรวจจิตเวช · ไตเทียม' },
+  {
+    date: '18–20 พ.ค.',
+    count: 44,
+    type: 'done',
+    status: 'เสร็จเรียบร้อย',
+    locs: 'ส่งมอบแล้วทั้งหมด',
+    details: ['ส่งมอบเครื่องคอมพิวเตอร์แล้วทั้งหมด 44 เครื่อง']
+  },
+  {
+    date: '21 พ.ค.',
+    count: 18,
+    type: 'done',
+    status: 'เสร็จเรียบร้อย',
+    locs: 'หอผู้ป่วยพิเศษ 14 · หอผู้ป่วยพิเศษ 13 · หอผู้ป่วยพิเศษ 12 · จ่ายยา ชั้น 1',
+    details: [
+      'Standby รับงาน',
+      'หอผู้ป่วยพิเศษ 14 จำนวน 3 เครื่อง',
+      'หอผู้ป่วยพิเศษ 13 จำนวน 3 เครื่อง · หอผู้ป่วยพิเศษ 12 จำนวน 3 เครื่อง',
+      'ห้องจ่ายยาผู้ป่วย ชั้น 1 จำนวน 9 เครื่อง'
+    ]
+  },
+  {
+    date: '22 พ.ค.',
+    count: 23,
+    type: 'done',
+    status: 'เสร็จเรียบร้อย',
+    locs: 'ศัลยกรรมกระดูก · ตา หู คอ จมูก · ทันตกรรม · หอผู้ป่วยพิเศษ 9',
+    details: [
+      'Standby รับงาน',
+      'หอผู้ป่วยศัลยกรรมกระดูก จำนวน 4 เครื่อง',
+      'หอผู้ป่วย ตา หู คอ จมูก จำนวน 3 เครื่อง',
+      'ทันตกรรม จำนวน 13 เครื่อง · หอผู้ป่วยพิเศษ 9 จำนวน 3 เครื่อง'
+    ]
+  },
+  {
+    date: '23 พ.ค. (เสาร์)',
+    count: 23,
+    type: 'wknd',
+    status: 'ตามแผน',
+    locs: 'จักษุ · หู คอ จมูก · โรคการทำงาน · กุมารเวชกรรม · สูติ-นรีเวชกรรม',
+    details: [
+      'จุดซักประวัติห้องตรวจ จักษุ จำนวน 4 เครื่อง · ห้องตรวจจักษุ จำนวน 2 เครื่อง',
+      'จุดซักประวัติห้องตรวจ หู คอ จมูก จำนวน 2 เครื่อง · ห้องตรวจ หู คอ จมูก จำนวน 1 เครื่อง',
+      'ห้องตรวจโรคการทำงานและห้องการได้ยิน รวม 4 เครื่อง',
+      'กุมารเวชกรรม 6 เครื่อง · สูติ-นรีเวชกรรม 4 เครื่อง'
+    ]
+  },
+  {
+    date: '24 พ.ค. (อาทิตย์)',
+    count: 16,
+    type: 'wknd',
+    status: 'ตามแผน',
+    locs: 'ฝากครรภ์ · จ่ายยา ชั้น 2',
+    details: [
+      'จุดซักประวัติ ฝากครรภ์ จำนวน 3 เครื่อง',
+      'ห้องตรวจ ฝากครรภ์ จำนวน 1 เครื่อง',
+      'ห้องจ่ายยาผู้ป่วย ชั้น 2 จำนวน 12 เครื่อง'
+    ]
+  },
+  {
+    date: '25 พ.ค.',
+    count: 23,
+    type: 'normal',
+    status: 'ตามแผน',
+    locs: 'ศัลยกรรมหญิง · ICU กุมารฯ · ICU อายุรกรรม · กุมารเวชกรรม',
+    details: [
+      'Standby รับงาน',
+      'หอผู้ป่วยศัลยกรรมหญิง จำนวน 6 เครื่อง',
+      'หอผู้ป่วยหนักกุมารเวชกรรม +PPL จำนวน 3 เครื่อง',
+      'หอผู้ป่วยหนักอายุรกรรม1 +PPL จำนวน 5 เครื่อง · หอผู้ป่วยกุมารเวชกรรม +PPL จำนวน 9 เครื่อง'
+    ]
+  },
+  {
+    date: '26 พ.ค.',
+    count: 21,
+    type: 'normal',
+    status: 'ตามแผน',
+    locs: 'ศัลยกรรมชาย · มะเร็งและเคมีบำบัด · ศัลยกรรมทั่วไป · กายภาพ · Stroke',
+    details: [
+      'Standby รับงาน',
+      'หอผู้ป่วยศัลยกรรมชาย จำนวน 6 เครื่อง',
+      'หอผู้ป่วยมะเร็งและเคมีบำบัด +PPL จำนวน 4 เครื่อง · ศัลยกรรมทั่วไป จำนวน 4 เครื่อง',
+      'OPD เคมีบำบัด ชั้น 5 จำนวน 1 เครื่อง · กายภาพบำบัด จำนวน 2 เครื่อง · หอผู้ป่วยโรคหลอดเลือดสมอง +PPL จำนวน 4 เครื่อง'
+    ]
+  },
+  {
+    date: '27 พ.ค.',
+    count: 21,
+    type: 'normal',
+    status: 'ตามแผน',
+    locs: 'จ่ายยา ชั้น 6+ชั้น1(40ปี) · หอผู้ป่วยพิเศษ 2 · หอผู้ป่วยพิเศษ 3 · อายุรกรรมชาย',
+    details: [
+      'Standby รับงาน',
+      'ห้องจ่ายยาผู้ป่วย ชั้น 6+ชั้น1(40ปี) จำนวน 6 เครื่อง',
+      'หอผู้ป่วยพิเศษ 2 จำนวน 3 เครื่อง · หอผู้ป่วยพิเศษ 3 จำนวน 2 เครื่อง',
+      'หอผู้ป่วยอายุรกรรมชาย 1-2 +PPL จำนวน 10 เครื่อง'
+    ]
+  },
+  {
+    date: '28 พ.ค.',
+    count: 17,
+    type: 'normal',
+    status: 'ตามแผน',
+    locs: 'หลังคลอด · ICU อายุรกรรม 2 · อายุรกรรมหญิง',
+    details: [
+      'Standby รับงาน',
+      'หลังคลอด จำนวน 3 เครื่อง',
+      'หอผู้ป่วยหนักอายุรกรรม 2 +PPL จำนวน 4 เครื่อง',
+      'หอผู้ป่วยอายุรกรรมหญิง 1+2 +PPL จำนวน 10 เครื่อง'
+    ]
+  },
+  {
+    date: '29 พ.ค.',
+    count: 17,
+    type: 'normal',
+    status: 'ตามแผน',
+    locs: 'ห้องคลอด · อุบัติเหตุและฉุกเฉิน · จ่ายยา ตึก 14 ชั้น · เก็บเงิน',
+    details: [
+      'Standby รับงาน',
+      'ห้องคลอด จำนวน 3 เครื่อง',
+      'อุบัติเหตุและฉุกเฉิน+สั่งการ+รีเฟอ จำนวน 11 เครื่อง',
+      'ห้องจ่ายยา ชั้น 1 ตึก 14 ชั้น จำนวน 2 เครื่อง · เก็บเงิน จำนวน 1 เครื่อง'
+    ]
+  },
+  {
+    date: '30 พ.ค. (เสาร์)',
+    count: 24,
+    type: 'peak',
+    status: 'สูงสุด',
+    locs: 'PCU · จ่ายยา PCC · เก็บเงิน · ICU ศัลยกรรม · ICU ศัลย์ประสาท',
+    details: [
+      'จุดซักประวัติห้องตรวจ ห้องตรวจ PCU จำนวน 5 เครื่อง',
+      'ห้องตรวจ PCU จำนวน 8 เครื่อง · ห้องจ่ายยา ชั้น 1 อาคาร PCC จำนวน 4 เครื่อง · เก็บเงิน จำนวน 1 เครื่อง',
+      'หอผู้ป่วยหนัก ศัลยกรรม จำนวน 4 เครื่อง',
+      'หอผู้ป่วยหนัก ศัลย์ประสาท จำนวน 2 เครื่อง'
+    ]
+  },
+  {
+    date: '31 พ.ค. (อาทิตย์)',
+    count: 18,
+    type: 'wknd',
+    status: 'ตามแผน',
+    locs: 'วิสัญญี · ห้องผ่าตัด · CCU · หอผู้ป่วยพิเศษ 4',
+    details: [
+      'วิสัญญี ชั้น 3,4 จำนวน 5 เครื่อง',
+      'ห้องผ่าตัด ชั้น 3,4 จำนวน 8 เครื่อง',
+      'CCU จำนวน 2 เครื่อง · หอผู้ป่วยพิเศษ 4 จำนวน 3 เครื่อง',
+      'รวมตามแผน 18 เครื่อง'
+    ]
+  },
+  {
+    date: '1 มิ.ย.',
+    count: 5,
+    type: 'normal',
+    status: 'ตามแผน',
+    locs: 'รังสีวิทยา · Cathlab',
+    details: [
+      'Standby รับงาน',
+      'รังสีวิทยา จำนวน 3 เครื่อง',
+      'Cathlab จำนวน 2 เครื่อง',
+      'รวมตามแผน 5 เครื่อง'
+    ]
+  },
+  {
+    date: '2 มิ.ย.',
+    count: 14,
+    type: 'normal',
+    status: 'ตามแผน',
+    locs: 'จิตเวช · ศูนย์โรคหัวใจ · จ่ายกลาง · โภชนาการ',
+    details: [
+      'Standby รับงาน',
+      'หอผู้ป่วยจิตเวช จำนวน 4 เครื่อง',
+      'ศูนย์โรคหัวใจ จำนวน 7 เครื่อง',
+      'จ่ายกลาง จำนวน 1 เครื่อง · โภชนาการ จำนวน 2 เครื่อง'
+    ]
+  },
+  {
+    date: '3 มิ.ย.',
+    count: 15,
+    type: 'normal',
+    status: 'ตามแผน',
+    locs: 'ห้องตรวจจิตเวช · ไตเทียม',
+    details: [
+      'Standby รับงาน',
+      'ห้องตรวจจิตเวช จำนวน 3 เครื่อง',
+      'ห้องตรวจจิตเวช จำนวน 6 เครื่อง',
+      'ไตเทียม จำนวน 6 เครื่อง'
+    ]
+  },
 ];
 
-const MAX_COUNT = 44;
-const tl = document.getElementById('timeline');
-timelineData.forEach(d => {
-  const pct = Math.round((d.count / MAX_COUNT) * 100);
-  const locs = d.locs.length > 36 ? d.locs.substring(0,36) + '…' : d.locs;
-  tl.innerHTML += `
-    <div class="timeline-row">
-      <div class="tl-date">${d.date.replace(' (เสาร์)','★').replace(' (อาทิตย์)','★')}</div>
-      <div class="tl-bar-track">
-        <div class="tl-bar-fill ${d.type}" style="width:${pct}%">${locs}</div>
-      </div>
-      <div class="tl-count"><strong>${d.count}</strong></div>
-    </div>`;
-});
-
-// Top depts
-const depts = [
-  { name: 'ทันตกรรม', count: 13 },
-  { name: 'หอผู้ป่วยกุมารเวชกรรม', count: 12 },
-  { name: 'PCU (จุดซักประวัติ+ห้องตรวจ)', count: 18 },
-  { name: 'อุบัติเหตุและฉุกเฉิน', count: 11 },
-  { name: 'อายุรกรรมหญิง 1+2', count: 10 },
-  { name: 'ห้องจ่ายยา ชั้น 1', count: 11 },
-  { name: 'ห้องผ่าตัด ชั้น 3,4', count: 8 },
-  { name: 'ศูนย์โรคหัวใจ', count: 7 },
-];
-const maxDept = Math.max(...depts.map(d => d.count));
-const dEl = document.getElementById('depts');
-depts.forEach((d, i) => {
-  const pct = Math.round((d.count / maxDept) * 100);
-  dEl.innerHTML += `
-    <div class="dept-row">
-      <div class="dept-rank">${i+1}</div>
-      <div class="dept-bar-wrap">
-        <div class="dept-name">${d.name}</div>
-        <div class="dept-bar-bg"><div class="dept-bar-fill" style="width:${pct}%;opacity:${0.5 + pct/200}"></div></div>
-      </div>
-      <div class="dept-num">${d.count}</div>
-    </div>`;
-});
-
-// Detail cards (21 พ.ค. onwards only)
-const cards = timelineData.slice(1);
+// Detail cards
+const cards = timelineData;
 const cEl = document.getElementById('cards');
 cards.forEach(d => {
-  const cls = d.type === 'wknd' ? 'dg-card wknd' : d.type === 'peak' ? 'dg-card peak' : 'dg-card';
+  const cls = d.type === 'done' ? 'dg-card done' : d.type === 'wknd' ? 'dg-card wknd' : d.type === 'peak' ? 'dg-card peak' : 'dg-card';
   const tag = d.type === 'wknd' ? '<div class="wknd-tag">หยุด</div>' :
-              d.type === 'peak' ? '<div class="peak-tag">สูงสุด</div>' : '';
+              d.type === 'peak' ? '<div class="peak-tag">สูงสุด</div>' :
+              d.type === 'done' ? '<div class="done-tag">เสร็จ</div>' : '';
   const shortDate = d.date.replace(' (เสาร์)','').replace(' (อาทิตย์)','');
   const locs = d.locs.split(' · ').join('<br>');
   cEl.innerHTML += `
@@ -599,6 +773,59 @@ cards.forEach(d => {
       <div class="dg-locs">${locs}</div>
     </div>`;
 });
+
+const tabEl = document.getElementById('dayTabs');
+const panelEl = document.getElementById('dayPanel');
+const dayHashes = [
+  'day-18-20-may', 'day-21-may', 'day-22-may', 'day-23-may', 'day-24-may',
+  'day-25-may', 'day-26-may', 'day-27-may', 'day-28-may', 'day-29-may',
+  'day-30-may', 'day-31-may', 'day-1-jun', 'day-2-jun', 'day-3-jun'
+];
+
+function renderDay(index, syncHash = true) {
+  const d = timelineData[index];
+  document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i === index);
+    btn.setAttribute('aria-selected', i === index ? 'true' : 'false');
+  });
+
+  panelEl.innerHTML = `
+    <div class="day-stat">
+      <div class="num">${d.count}</div>
+      <div class="label">เครื่องในวันนั้น</div>
+      <div class="status">${d.status}</div>
+    </div>
+    <div class="day-detail">
+      ${d.details.map(item => `<div class="day-item">${item.replace(/^([^·]+จำนวน \d+ เครื่อง)/, '<strong>$1</strong>')}</div>`).join('')}
+    </div>`;
+
+  if (syncHash && location.hash !== `#${dayHashes[index]}`) {
+    history.replaceState(null, '', `#${dayHashes[index]}`);
+  }
+}
+
+timelineData.forEach((d, i) => {
+  const label = d.date.replace(' พ.ค.', '/5').replace(' มิ.ย.', '/6').replace(' (เสาร์)', '').replace(' (อาทิตย์)', '');
+  tabEl.innerHTML += `
+    <button class="tab-btn ${d.type}" type="button" role="tab" aria-selected="false" aria-controls="dayPanel" data-index="${i}" id="${dayHashes[i]}">
+      <span class="tab-date">${label}</span>
+      <span class="tab-count">${d.count} เครื่อง</span>
+    </button>`;
+});
+
+tabEl.addEventListener('click', (event) => {
+  const button = event.target.closest('.tab-btn');
+  if (!button) return;
+  renderDay(Number(button.dataset.index));
+});
+
+window.addEventListener('hashchange', () => {
+  const hashIndex = dayHashes.indexOf(location.hash.slice(1));
+  renderDay(hashIndex >= 0 ? hashIndex : 2, false);
+});
+
+const initialIndex = dayHashes.indexOf(location.hash.slice(1));
+renderDay(initialIndex >= 0 ? initialIndex : 2);
 </script>
 </body>
 </html>
